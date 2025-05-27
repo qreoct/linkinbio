@@ -66,6 +66,9 @@ importers:
       '@eslint/eslintrc':
         specifier: ^3
         version: 3.3.1
+      '@next/eslint-plugin-next':
+        specifier: ^15.3.2
+        version: 15.3.2
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.7
@@ -82,7 +85,7 @@ importers:
         specifier: ^19
         version: 19.1.5(@types/react@19.1.4)
       eslint:
-        specifier: ^9
+        specifier: ^9.27.0
         version: 9.27.0(jiti@1.21.7)
       eslint-config-next:
         specifier: 15.3.2
@@ -90,6 +93,12 @@ importers:
       eslint-config-prettier:
         specifier: ^10.1.5
         version: 10.1.5(eslint@9.27.0(jiti@1.21.7))
+      eslint-plugin-n:
+        specifier: ^17.18.0
+        version: 17.18.0(eslint@9.27.0(jiti@1.21.7))
+      eslint-plugin-react-hooks:
+        specifier: ^5.2.0
+        version: 5.2.0(eslint@9.27.0(jiti@1.21.7))
       jiti:
         specifier: ^1.21.7
         version: 1.21.7
@@ -1367,6 +1376,12 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
+  eslint-compat-utils@0.5.1:
+    resolution: {integrity: sha512-3z3vFexKIEnjHE3zCMRo6fn/e44U7T1khUjg+Hp0ZQMCigh28rALD0nPFBcGZuiLC5rLZa2ubQHDRln09JfU2Q==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      eslint: '>=6.0.0'
+
   eslint-config-next@15.3.2:
     resolution: {integrity: sha512-FerU4DYccO4FgeYFFglz0SnaKRe1ejXQrDb8kWUkTAg036YWi+jUsgg4sIGNCDhAsDITsZaL4MzBWKB6f4G1Dg==}
     peerDependencies:
@@ -1419,6 +1434,12 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
 
+  eslint-plugin-es-x@7.8.0:
+    resolution: {integrity: sha512-7Ds8+wAAoV3T+LAKeu39Y5BzXCrGKrcISfgKEqTS4BDN8SFEDQd0S43jiQ8vIa3wUKD07qitZdfzlenSi8/0qQ==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      eslint: '>=8'
+
   eslint-plugin-import@2.31.0:
     resolution: {integrity: sha512-ixmkI62Rbc2/w8Vfxyh1jQRTdRTF52VxwRVHl/ykPAmqG+Nb7/kNn+byLP0LxPgI7zWA16Jt82SybJInmMia3A==}
     engines: {node: '>=4'}
@@ -1434,6 +1455,12 @@ packages:
     engines: {node: '>=4.0'}
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9
+
+  eslint-plugin-n@17.18.0:
+    resolution: {integrity: sha512-hvZ/HusueqTJ7VDLoCpjN0hx4N4+jHIWTXD4TMLHy9F23XkDagR9v+xQWRWR57yY55GPF8NnD4ox9iGTxirY8A==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      eslint: '>=8.23.0'
 
   eslint-plugin-react-hooks@5.2.0:
     resolution: {integrity: sha512-+f15FfK64YQwZdJNELETdn5ibXEUQmW1DZL6KXhNnc2heoy/sg9VJJeT7n8TlMWouzWqSWavFkIhHyIbIAEapg==}
@@ -1583,6 +1610,10 @@ packages:
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
+    engines: {node: '>=18'}
+
+  globals@15.15.0:
+    resolution: {integrity: sha512-7ACyT3wmyp3I61S4fG682L0VA2RGD9otkqGJIwNUMF1SWUombIIk+af1unuDYgMm082aHYwD+mzJvv9Iu8dsgg==}
     engines: {node: '>=18'}
 
   globalthis@1.0.4:
@@ -3730,6 +3761,11 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
+  eslint-compat-utils@0.5.1(eslint@9.27.0(jiti@1.21.7)):
+    dependencies:
+      eslint: 9.27.0(jiti@1.21.7)
+      semver: 7.7.2
+
   eslint-config-next@15.3.2(eslint@9.27.0(jiti@1.21.7))(typescript@5.8.3):
     dependencies:
       '@next/eslint-plugin-next': 15.3.2
@@ -3788,6 +3824,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  eslint-plugin-es-x@7.8.0(eslint@9.27.0(jiti@1.21.7)):
+    dependencies:
+      '@eslint-community/eslint-utils': 4.7.0(eslint@9.27.0(jiti@1.21.7))
+      '@eslint-community/regexpp': 4.12.1
+      eslint: 9.27.0(jiti@1.21.7)
+      eslint-compat-utils: 0.5.1(eslint@9.27.0(jiti@1.21.7))
+
   eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.32.1(eslint@9.27.0(jiti@1.21.7))(typescript@5.8.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.27.0(jiti@1.21.7)):
     dependencies:
       '@rtsao/scc': 1.1.0
@@ -3835,6 +3878,18 @@ snapshots:
       object.fromentries: 2.0.8
       safe-regex-test: 1.1.0
       string.prototype.includes: 2.0.1
+
+  eslint-plugin-n@17.18.0(eslint@9.27.0(jiti@1.21.7)):
+    dependencies:
+      '@eslint-community/eslint-utils': 4.7.0(eslint@9.27.0(jiti@1.21.7))
+      enhanced-resolve: 5.18.1
+      eslint: 9.27.0(jiti@1.21.7)
+      eslint-plugin-es-x: 7.8.0(eslint@9.27.0(jiti@1.21.7))
+      get-tsconfig: 4.10.0
+      globals: 15.15.0
+      ignore: 5.3.2
+      minimatch: 9.0.5
+      semver: 7.7.2
 
   eslint-plugin-react-hooks@5.2.0(eslint@9.27.0(jiti@1.21.7)):
     dependencies:
@@ -4039,6 +4094,8 @@ snapshots:
   globals@11.12.0: {}
 
   globals@14.0.0: {}
+
+  globals@15.15.0: {}
 
   globalthis@1.0.4:
     dependencies:
