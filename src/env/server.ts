@@ -5,6 +5,7 @@ import { z } from "zod";
 export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "production"]),
+    AUTH_SECRET: z.string(),
   },
   onValidationError: (issues: readonly StandardSchemaV1.Issue[]) => {
     console.error(

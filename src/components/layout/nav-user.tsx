@@ -32,7 +32,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import SwitchThemeToggle from "./ui/switch-theme-toggle"
+import SwitchThemeToggle from "../ui/switch-theme-toggle"
 
 export function NavUser({
   user,
