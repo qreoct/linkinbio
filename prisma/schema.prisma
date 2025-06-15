@@ -15,6 +15,12 @@ model User {
   emailVerified DateTime? @map("email_verified")
   image         String?
   accounts      Account[]
+  role          UserRole @default(USER)
+}
+
+enum UserRole {
+  USER
+  ADMIN
 }
 
 model Account {
@@ -37,9 +43,10 @@ model Account {
 }
 
 model VerificationToken {
-  identifier String
-  token      String
+  id String @id @default(cuid())
+  email      String
+  token      String @unique
   expires    DateTime
 
-  @@unique([identifier, token])
+  @@unique([email, token])
 }

@@ -1,5 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+import { SocialLoginHandler } from "@/types/auth"
+import Image from "next/image"
 import { SocialButtons } from "./social-buttons"
 
 interface CardWrapperProps extends React.ComponentProps<"div"> {
@@ -10,6 +12,7 @@ interface CardWrapperProps extends React.ComponentProps<"div"> {
   footerHref?: string,
   footerHrefLabel?: string,
   imageSrc?: string,
+  handleSocialLoginAction?: SocialLoginHandler,
 }
 
 export function CardWrapper({
@@ -21,6 +24,7 @@ export function CardWrapper({
   footerHrefLabel,
   imageSrc,
   className,
+  handleSocialLoginAction,
   ...props
 }: CardWrapperProps) {
   return (
@@ -43,7 +47,7 @@ export function CardWrapper({
                   Or continue with
                 </span>
               </div>
-              <SocialButtons />
+              {handleSocialLoginAction && <SocialButtons handleSocialLoginAction={handleSocialLoginAction} />}
               {(footerLabel || (footerHref && footerHrefLabel)) && (
                 <div className="text-center text-sm">
                   {footerLabel}{" "}
@@ -56,7 +60,7 @@ export function CardWrapper({
           </div>
           {imageSrc && (
           <div className="bg-muted relative hidden md:block">
-              <img
+              <Image
                 src={imageSrc}
                 alt="Image"
                 className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
