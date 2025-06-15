@@ -20,5 +20,8 @@
     "**/app/**/layout.tsx": "${dirname} -  Layout",
     "**/components/**/index.tsx": "${dirname} -  Component",
   },
-  "workbench.editor.showTabs": false,
+  "workbench.editor.showTabs": "single",
+  "cSpell.words": [
+    "shadcn"
+  ],
 }

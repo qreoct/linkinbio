@@ -20,7 +20,6 @@ export function RegisterForm() {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
-      password: "",
       name: "",
     },
   })
@@ -71,27 +70,6 @@ export function RegisterForm() {
                     id="email"
                     type="email"
                     placeholder="me@example.com"
-                    disabled={isPending}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password" 
-            render={({ field }) => (
-              <FormItem>
-                <div className="flex items-center">
-                  <FormLabel>Password</FormLabel>
-                </div>
-                <FormControl>
-                  <Input
-                    {...field}
-                    id="password"
-                    type="password"
-                    placeholder="********"
-                    required
                     disabled={isPending}
                   />
                 </FormControl>

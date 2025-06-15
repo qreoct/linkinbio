@@ -21,7 +21,6 @@ export function LoginForm() {
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   })
 
@@ -55,33 +54,6 @@ export function LoginForm() {
                     id="email"
                     type="email"
                     placeholder="me@example.com"
-                    disabled={isPending}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password" 
-            render={({ field }) => (
-              <FormItem>
-                <div className="flex items-center">
-                  <FormLabel>Password</FormLabel>
-                  <a
-                    href="#"
-                    className="ml-auto text-sm underline-offset-2 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
-                <FormControl>
-                  <Input
-                    {...field}
-                    id="password"
-                    type="password"
-                    placeholder="********"
-                    required
                     disabled={isPending}
                   />
                 </FormControl>

@@ -17,7 +17,7 @@ import * as React from "react"
 import { NavMain } from "@/components/layout/nav-main"
 import { NavProjects } from "@/components/layout/nav-projects"
 import { NavUser } from "@/components/layout/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { TeamSwitcher } from "@/components/layout/team-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -25,6 +25,8 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
 // This is sample data.
 const data = {
@@ -157,6 +159,9 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const user = useCurrentUser();
+  
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -167,7 +172,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {user ? (
+          <NavUser user={user} />
+        ) : (
+          <Skeleton className="h-12 w-full rounded-lg" />
+        )}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
