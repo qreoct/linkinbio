@@ -1,11 +1,10 @@
-import authConfig from "@/auth.config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import NextAuth, { DefaultSession } from "next-auth";
-
-import { db } from "@/lib/db";
-
 import { UserRole } from "@prisma/client";
+import NextAuth, { DefaultSession } from "next-auth";
 import "next-auth/jwt";
+
+import authConfig from "@/auth.config";
+import { db } from "@/lib/db";
 
 declare module "next-auth" {
   interface User {
@@ -42,7 +41,7 @@ export const {
             email: user.email,
             emailVerified: new Date(),
           },
-        })
+        });
       }
     },
   },
@@ -62,5 +61,5 @@ export const {
   },
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
-  ...authConfig
+  ...authConfig,
 });

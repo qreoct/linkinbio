@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Starter Template
 
-## Getting Started
+A Next.js template with authentication, database integration, and development tooling.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Authentication**: Magic link + OAuth providers
+- **Database**: PostgreSQL with Prisma ORM
+- **Code Quality**: ESLint, Prettier, TypeScript
+
+## Directory Structure
+
+```
+├── actions/         # Server actions and APIs
+├── app/             # App router pages and layouts. Prefer to group by feature
+├── components/      # Reusable UI components. Prefer to group by feature
+│   ├── ui/          # shadcn/ui components
+│   ├── auth/        # Authentication components
+│   └── [feature]/   # Feature-specific components
+├── data/            # Database queries and data access layer
+├── env/             # Environment variables
+├── hooks/           # Client-side React hooks
+├── lib/             # Server-side utilities
+├── schemas/         # Form validation schemas
+└── types/           # TypeScript type definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Coding Standards
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Code Organization
+- **Server vs Client**: Use `lib/` for server code, `hooks/` for client code
+- **Data Fetching**: Keep database queries in `data/` directory
+- **Validation**: Define schemas in `schemas/` (separate from database schemas)
+- **Actions**: Server actions in `actions/` with proper error handling
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### TypeScript
+- Always define prop interfaces for components
+- Export types from `types/` directory for reuse
 
-## Learn More
+### Git Workflow
+- **Commits**: Use conventional commits (`feat:`, `fix:`, `docs:`)
+- **Branches**: Feature branches from `main`
+- **PRs**: Include description and testing notes
 
-To learn more about Next.js, take a look at the following resources:
+## Development
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Install dependencies
+pnpm install
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your database and auth provider credentials
+# Remember to set up an email service for OTP verification
 
-## Deploy on Vercel
+# Run development server
+pnpm dev
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Other commands
+pnpm build        # Build for production
+pnpm lint         # Run ESLint
+pnpm type-check   # Run TypeScript check
+```

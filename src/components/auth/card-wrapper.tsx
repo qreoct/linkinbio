@@ -1,18 +1,20 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
-import { SocialLoginHandler } from "@/types/auth"
-import Image from "next/image"
-import { SocialButtons } from "./social-buttons"
+import Image from "next/image";
+
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { SocialLoginHandler } from "@/types/auth";
+
+import { SocialButtons } from "./social-buttons";
 
 interface CardWrapperProps extends React.ComponentProps<"div"> {
-  children: React.ReactNode,
-  headerLabel: string,
-  descriptionLabel?: string,
-  footerLabel?: string,
-  footerHref?: string,
-  footerHrefLabel?: string,
-  imageSrc?: string,
-  handleSocialLoginAction?: SocialLoginHandler,
+  children: React.ReactNode;
+  headerLabel: string;
+  descriptionLabel?: string;
+  footerLabel?: string;
+  footerHref?: string;
+  footerHrefLabel?: string;
+  imageSrc?: string;
+  handleSocialLoginAction?: SocialLoginHandler;
 }
 
 export function CardWrapper({
@@ -47,7 +49,11 @@ export function CardWrapper({
                   Or continue with
                 </span>
               </div>
-              {handleSocialLoginAction && <SocialButtons handleSocialLoginAction={handleSocialLoginAction} />}
+              {handleSocialLoginAction && (
+                <SocialButtons
+                  handleSocialLoginAction={handleSocialLoginAction}
+                />
+              )}
               {(footerLabel || (footerHref && footerHrefLabel)) && (
                 <div className="text-center text-sm">
                   {footerLabel}{" "}
@@ -59,7 +65,7 @@ export function CardWrapper({
             </div>
           </div>
           {imageSrc && (
-          <div className="bg-muted relative hidden md:block">
+            <div className="bg-muted relative hidden md:block">
               <Image
                 src={imageSrc}
                 alt="Image"
@@ -74,5 +80,5 @@ export function CardWrapper({
         and <a href="#">Privacy Policy</a>.
       </div>
     </div>
-  )
+  );
 }

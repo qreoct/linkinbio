@@ -1,7 +1,7 @@
-import { auth } from "@/auth";
+import { currentUser } from "@/lib/auth";
 
 const SettingsPage = async () => {
-  const session = await auth();
+  const session = await currentUser();
   return (
     <div>
       <pre>{JSON.stringify(session, null, 2)}</pre>

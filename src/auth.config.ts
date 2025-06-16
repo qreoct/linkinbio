@@ -1,7 +1,8 @@
-import { authorizeCredentials } from "@/actions/login"
-import { env } from "@/env/server"
-import Credentials from "next-auth/providers/credentials"
-import Github from "next-auth/providers/github"
+import Credentials from "next-auth/providers/credentials";
+import Github from "next-auth/providers/github";
+
+import { authorizeCredentials } from "@/actions/login";
+import { env } from "@/env/server";
 
 const authConfig = {
   providers: [
@@ -18,7 +19,6 @@ const authConfig = {
       authorize: authorizeCredentials,
     }),
   ],
-}
+};
 
-export default authConfig
-
+export default authConfig;

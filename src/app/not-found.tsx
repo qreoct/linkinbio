@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
-      <div className="max-w-md w-full text-center space-y-8">
+    <div className="bg-background flex min-h-screen items-center justify-center px-4">
+      <div className="w-full max-w-md space-y-8 text-center">
         {/* 404 Number with Animation */}
         <div className="relative">
-          <h1 className="text-9xl font-bold text-primary/20 select-none animate-pulse">
+          <h1 className="text-primary/20 animate-pulse text-9xl font-bold select-none">
             404
           </h1>
         </div>
 
         {/* Error Message */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-foreground">
+          <h2 className="text-foreground text-2xl font-semibold">
             Page Not Found
           </h2>
           <p className="text-muted-foreground leading-relaxed">
@@ -24,15 +24,15 @@ export default function NotFound() {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button 
-            variant="outline" 
-            size="lg" 
+        <div className="flex flex-col justify-center gap-3 sm:flex-row">
+          <Button
+            variant="outline"
+            size="lg"
             className="min-w-32"
             onClick={() => window.history.back()}
           >
             <svg
-              className="w-4 h-4 mr-2"
+              className="mr-2 h-4 w-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

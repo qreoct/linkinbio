@@ -10,10 +10,7 @@ export const env = createEnv({
     GITHUB_CLIENT_SECRET: z.string(),
   },
   onValidationError: (issues: readonly StandardSchemaV1.Issue[]) => {
-    console.error(
-      "❌ Invalid environment variables:",
-      issues
-    );
+    console.error("❌ Invalid environment variables:", issues);
     process.exit(1);
   },
   // eslint-disable-next-line n/no-process-env

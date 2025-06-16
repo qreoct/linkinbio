@@ -1,24 +1,23 @@
-import authConfig from "@/auth.config";
 import NextAuth from "next-auth";
 
+import authConfig from "@/auth.config";
 import {
+  DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
-  DEFAULT_LOGIN_REDIRECT,
-  publicRoutes
+  publicRoutes,
 } from "@/routes";
 
 const { auth } = NextAuth(authConfig);
 
 /**
  * Middleware to handle authentication and authorization for the app.
- * 
+ *
  * Return values:
  * - null: continue processing the request
  * - Response.redirect: redirect to the given URL
  */
 export default auth((req) => {
-
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
@@ -33,10 +32,9 @@ export default auth((req) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      // If the user is alreadylogged in, no need to go to auth route again 
+      // If the user is alreadylogged in, no need to go to auth route again
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-    }
-    else {
+    } else {
       // Otherwise, continue to the auth route
       return;
     }
@@ -48,9 +46,8 @@ export default auth((req) => {
   }
 
   // If the user is logged in, continue
-  return
-
-})
+  return;
+});
 
 export const config = {
   matcher: [
@@ -59,4 +56,4 @@ export const config = {
     // Always run for API routes
     "/(api|trpc)(.*)",
   ],
-}
+};
