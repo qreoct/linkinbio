@@ -1,5 +1,6 @@
 "use client";
 
+import { savePage } from "@/actions/save-page";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ import {
 import {
   ArrowDown,
   ArrowUp,
+  Globe,
   Image,
   Link,
   MessageSquare,
@@ -29,6 +31,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
 import ComponentLibraryPopover from "./ComponentLibraryPopover";
+import PublishDialog from "./PublishDialog";
 
 interface PageBuilderProps {
   config: LinkInBioPageConfig;
@@ -47,6 +50,7 @@ const componentLibrary = [
 export default function PageBuilder({ config, onConfigChange }: PageBuilderProps) {
   const [activeTab, setActiveTab] = useState<"profile" | "components" | "theme">("components");
   const [selectedComponent, setSelectedComponent] = useState<Component | null>(null);
+  const [publishDialogOpen, setPublishDialogOpen] = useState(false);
   const isLimitReached = config.components.length >= 3;
 
   // Keep selectedComponent in sync with config changes
@@ -201,6 +205,21 @@ export default function PageBuilder({ config, onConfigChange }: PageBuilderProps
       if (updatedComponent) {
         setSelectedComponent(updatedComponent);
       }
+    }
+  };
+
+  const handlePublish = async (slug: string) => {
+    try {
+      const result = await savePage({
+        slug,
+        title: config.profile.name,
+        description: config.profile.bio,
+        config
+      });
+
+      return result;
+    } catch {
+      return { success: false, error: "An error occurred while publishing" };
     }
   };
 
@@ -372,34 +391,47 @@ export default function PageBuilder({ config, onConfigChange }: PageBuilderProps
     <div className="flex h-full">
       {/* Navigation Tabs */}
       <div className="w-80 border-r bg-muted/30 p-3">
-        <div className="space-y-2">
-        <Button
-            variant={activeTab === "profile" ? "default" : "ghost"}
-            size="sm"
-            className="flex-1 text-sm h-8 w-full justify-start"
-            onClick={() => setActiveTab("profile")}
-          >
-            <User className="h-3 w-3 mr-1" />
-            Profile
-          </Button>
-          <Button
-            variant={activeTab === "components" ? "default" : "ghost"}
-            size="sm"
-            className="flex-1 text-sm h-8 w-full justify-start"
-            onClick={() => setActiveTab("components")}
-          >
-            <Settings className="h-3 w-3 mr-1" />
-            Components
-          </Button>
-          <Button
-            variant={activeTab === "theme" ? "default" : "ghost"}
-            size="sm"
-            className="flex-1 text-sm h-8 w-full justify-start"
-            onClick={() => setActiveTab("theme")}
-          >
-            <Palette className="h-3 w-3 mr-1" />
-            Theme
-          </Button>
+        <div className="space-y-2 flex flex-col justify-between h-full">
+          <div>
+            <Button
+                variant={activeTab === "profile" ? "default" : "ghost"}
+                size="sm"
+                className="flex-1 text-sm h-8 w-full justify-start"
+                onClick={() => setActiveTab("profile")}
+              >
+                <User className="h-3 w-3 mr-1" />
+                Profile
+              </Button>
+            <Button
+              variant={activeTab === "components" ? "default" : "ghost"}
+              size="sm"
+              className="flex-1 text-sm h-8 w-full justify-start"
+              onClick={() => setActiveTab("components")}
+            >
+              <Settings className="h-3 w-3 mr-1" />
+              Components
+            </Button>
+            <Button
+              variant={activeTab === "theme" ? "default" : "ghost"}
+              size="sm"
+              className="flex-1 text-sm h-8 w-full justify-start"
+              onClick={() => setActiveTab("theme")}
+            >
+              <Palette className="h-3 w-3 mr-1" />
+              Theme
+            </Button>
+          </div>
+
+          {/* Publish Button */}
+          <div className="border-t pt-4">
+            <Button
+              onClick={() => setPublishDialogOpen(true)}
+              className="w-full"
+            >
+              <Globe className="h-4 w-4 mr-2" />
+              Publish Page
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -486,7 +518,14 @@ export default function PageBuilder({ config, onConfigChange }: PageBuilderProps
                                 React.createElement(componentLibrary.find(t => t.type === component.type)!.icon, { className: "h-3 w-3" })
                               }
                               <span className="text-md font-medium capitalize">{component.type}</span>
-                              <Badge variant="outline">{component.title}</Badge>
+                              <Badge variant="outline">
+                                {component.type === "link" ? component.title : 
+                                 component.type === "video" ? component.title || "Video" :
+                                 component.type === "social" ? component.username || "Social" :
+                                 component.type === "text" ? "Text" :
+                                 component.type === "image" ? "Image" :
+                                 component.type === "button" ? component.text || "Button" : "Component"}
+                              </Badge>
                             </div>
                           </div>
                           <div className="flex items-center gap-1">
@@ -531,7 +570,7 @@ export default function PageBuilder({ config, onConfigChange }: PageBuilderProps
                     </Card>
                   ))}
 
-                                  {config.components.length === 0 && (
+                  {config.components.length === 0 && (
                     <div className="text-center py-8 text-muted-foreground">
                       <Plus className="h-8 w-8 mx-auto mb-2 opacity-50" />
                       <p className="text-xs">No components added yet</p>
@@ -615,9 +654,16 @@ export default function PageBuilder({ config, onConfigChange }: PageBuilderProps
             </div>
             {renderComponentEditor(selectedComponent)}
           </div>
-)}
+        )}
       </div>
-      
+
+      {/* Publish Dialog */}
+      <PublishDialog
+        open={publishDialogOpen}
+        onOpenChange={setPublishDialogOpen}
+        config={config}
+        onPublish={handlePublish}
+      />
     </div>
   );
 }
