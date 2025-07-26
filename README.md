@@ -56,8 +56,15 @@ cp .env.example .env
 # Run development server
 pnpm dev
 
+# Run migrations
+pnpm prisma migrate dev
+
 # Other commands
 pnpm build        # Build for production
 pnpm lint         # Run ESLint
 pnpm type-check   # Run TypeScript check
 ```
+
+## Credits
+
+Auth setup: [Code with Antonio](https://www.youtube.com/watch?v=1MTyCvS05V4)
