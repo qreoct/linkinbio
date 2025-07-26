@@ -26,7 +26,8 @@ import {
   Video,
   X
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Badge } from "../ui/badge";
 import ComponentLibraryPopover from "./ComponentLibraryPopover";
 
 interface PageBuilderProps {
@@ -47,6 +48,19 @@ export default function PageBuilder({ config, onConfigChange }: PageBuilderProps
   const [activeTab, setActiveTab] = useState<"profile" | "components" | "theme">("components");
   const [selectedComponent, setSelectedComponent] = useState<Component | null>(null);
   const isLimitReached = config.components.length >= 3;
+
+  // Keep selectedComponent in sync with config changes
+  useEffect(() => {
+    if (selectedComponent) {
+      const updatedComponent = config.components.find(c => c.id === selectedComponent.id);
+      if (updatedComponent) {
+        setSelectedComponent(updatedComponent);
+      } else {
+        // Component was deleted, clear selection
+        setSelectedComponent(null);
+      }
+    }
+  }, [config.components, selectedComponent?.id]);
 
   const handleProfileChange = (profileUpdates: Partial<typeof config.profile>) => {
     onConfigChange({
@@ -133,12 +147,22 @@ export default function PageBuilder({ config, onConfigChange }: PageBuilderProps
   };
 
   const updateComponent = (id: string, updates: Partial<Component>) => {
+    const updatedComponents = config.components.map(component =>
+      component.id === id ? { ...component, ...updates as typeof component } : component
+    );
+    
     onConfigChange({
       ...config,
-      components: config.components.map(component =>
-        component.id === id ? { ...component, ...updates as typeof component } : component
-      )
+      components: updatedComponents
     });
+
+    // Update selectedComponent if it's the one being edited
+    if (selectedComponent?.id === id) {
+      const updatedComponent = updatedComponents.find(c => c.id === id);
+      if (updatedComponent) {
+        setSelectedComponent(updatedComponent);
+      }
+    }
   };
 
   const deleteComponent = (id: string) => {
@@ -170,6 +194,14 @@ export default function PageBuilder({ config, onConfigChange }: PageBuilderProps
       ...config,
       components: newComponents
     });
+
+    // Update selectedComponent if it's the one being moved
+    if (selectedComponent?.id === id) {
+      const updatedComponent = newComponents.find(c => c.id === id);
+      if (updatedComponent) {
+        setSelectedComponent(updatedComponent);
+      }
+    }
   };
 
   const renderComponentEditor = (component: Component) => {
@@ -449,11 +481,12 @@ export default function PageBuilder({ config, onConfigChange }: PageBuilderProps
                       <CardContent className="p-2">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-2">
                               {componentLibrary.find(t => t.type === component.type)?.icon && 
                                 React.createElement(componentLibrary.find(t => t.type === component.type)!.icon, { className: "h-3 w-3" })
                               }
-                              <span className="text-xs font-medium capitalize">{component.type}</span>
+                              <span className="text-md font-medium capitalize">{component.type}</span>
+                              <Badge variant="outline">{component.title}</Badge>
                             </div>
                           </div>
                           <div className="flex items-center gap-1">
