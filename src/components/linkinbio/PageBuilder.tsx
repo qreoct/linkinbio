@@ -64,7 +64,7 @@ export default function PageBuilder({ config, onConfigChange }: PageBuilderProps
         setSelectedComponent(null);
       }
     }
-  }, [config.components, selectedComponent?.id]);
+  }, [config.components, selectedComponent]);
 
   const handleProfileChange = (profileUpdates: Partial<typeof config.profile>) => {
     onConfigChange({
