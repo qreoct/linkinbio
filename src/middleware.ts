@@ -5,6 +5,7 @@ import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
+  privateRoutes,
   publicRoutes,
 } from "@/routes";
 
@@ -17,35 +18,31 @@ const { auth } = NextAuth(authConfig);
  * - null: continue processing the request
  * - Response.redirect: redirect to the given URL
  */
-export default auth((req) => {
+export default auth(async (req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const isPrivateRoute = privateRoutes.includes(nextUrl.pathname);
 
   if (isApiAuthRoute) {
-    // Since this is an API route for auth, we should let it through
     return;
   }
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      // If the user is alreadylogged in, no need to go to auth route again
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     } else {
-      // Otherwise, continue to the auth route
       return;
     }
   }
 
-  if (!isLoggedIn && !isPublicRoute) {
-    // Non public routes require authentication
+  if (!isLoggedIn && !isPublicRoute && isPrivateRoute) {
     return Response.redirect(new URL("/auth/login", nextUrl));
   }
 
-  // If the user is logged in, continue
   return;
 });
 
