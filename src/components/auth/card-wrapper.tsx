@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -57,9 +58,11 @@ export function CardWrapper({
               {(footerLabel || (footerHref && footerHrefLabel)) && (
                 <div className="text-center text-sm">
                   {footerLabel}{" "}
-                  <a href={footerHref} className="underline underline-offset-4">
-                    {footerHrefLabel}
-                  </a>
+                  {footerHref && footerHrefLabel && (
+                    <a href={footerHref} className="underline underline-offset-4">
+                      {footerHrefLabel}
+                    </a>
+                  )}
                 </div>
               )}
             </div>
@@ -76,8 +79,8 @@ export function CardWrapper({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="/terms-of-service">Terms of Service</a>{" "}
-        and <a href="/privacy-policy">Privacy Policy</a>.
+        By clicking continue, you agree to our <Link href="/terms-of-service">Terms of Service</Link>{" "}
+        and <Link href="/privacy-policy">Privacy Policy</Link>.
       </div>
     </div>
   );

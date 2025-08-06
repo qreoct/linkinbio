@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Component, LinkInBioPageConfig } from "@/types/linkinbio";
+import Image from "next/image";
 
 interface LinkInBioProps {
   config: LinkInBioPageConfig;
@@ -88,13 +89,15 @@ const renderComponent = (component: Component, theme?: LinkInBioPageConfig["them
     case "image":
       return (
         <div key={component.id} className="w-full">
-          <img
+          <Image
             src={component.url}
             alt={component.alt || "Image"}
+            width={component.width || 800}
+            height={component.height || 600}
             className="w-full rounded-lg"
             style={{
-              width: component.width || "auto",
-              height: component.height || "auto"
+              width: component.width ? `${component.width}px` : "auto",
+              height: component.height ? `${component.height}px` : "auto"
             }}
           />
         </div>
@@ -149,9 +152,11 @@ export default function Page({ config }: LinkInBioProps) {
         <div className="text-center">
           {profile.avatar && (
             <div className="mb-4">
-              <img 
+              <Image 
                 src={profile.avatar}
                 alt={profile.name}
+                width={96}
+                height={96}
                 className="w-24 h-24 rounded-full mx-auto object-cover"
               />
             </div>
