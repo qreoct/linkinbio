@@ -136,7 +136,7 @@ export default function PublishDialog({
           <div className="space-y-2">
             <Label htmlFor="slug">Page URL</Label>
             <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">yourdomain.com/</span>
+              <span className="text-sm text-muted-foreground">bio.jfrsn.dev/</span>
               <Input
                 id="slug"
                 value={slug}
@@ -144,6 +144,7 @@ export default function PublishDialog({
                 placeholder="my-awesome-page"
                 className="flex-1"
                 disabled={isPublishing}
+                maxLength={10}
               />
             </div>
             

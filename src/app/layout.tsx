@@ -8,8 +8,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Next App",
-  description: "Next App",
+  title: "Link in Bio",
+  description: "Link in Bio",
 };
 
 export default async function RootLayout({
